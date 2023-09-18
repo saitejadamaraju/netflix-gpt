@@ -2,13 +2,14 @@ import Header from "./Header";
 import { useState,useRef } from "react";
 import { Validate } from "../utils/Validate";
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword,getAuth,updateProfile } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_URL } from "../utils/constants";
 
 
 const Login=()=>{
-    const navigate=useNavigate();
+    
     const dispatch=useDispatch();
 
     const [isSignInForm,setIsSignInForm]=useState(true);
@@ -81,11 +82,11 @@ const Login=()=>{
         <div>
             <Header/>
             <div className="absolute">
-                <img className="object-cover"
-                 src="https://assets.nflxext.com/ffe/siteui/vlv3/42df4e1f-bef6-499e-87ff-c990584de314/5e7c383c-1f88-4983-b4da-06e14c0984ba/IN-en-20230904-popsignuptwoweeks-perspective_alpha_website_medium.jpg"
+                <img className="h-screen w-screen object-cover"
+                 src={BG_URL}
                  alt="logo"/>
             </div>
-            <form onSubmit={(e)=>e.preventDefault()}className="w-full md:w-4/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80">
+            <form onSubmit={(e)=>e.preventDefault()}className="w-full md:w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80">
                 <h1 className="font-semibold text-3xl my-2">{isSignInForm? "Sign In":"Sign Up"}</h1>
                 {!isSignInForm && (<input ref={name} type="text" placeholder="Full Name" className="p-4 my-4 w-full bg-gray-700 rounded-lg" />)}
                 <input ref={email} type="text" placeholder="Email or phone number" className="p-4 my-4 w-full bg-gray-700 rounded-lg" />

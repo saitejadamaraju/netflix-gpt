@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleGptSearchView } from "../utils/gptSlice";
 
 const Header=()=>{
      
@@ -10,6 +11,8 @@ const Header=()=>{
     const dispatch=useDispatch();
 
     const user=useSelector((store)=>store.user);
+
+    const showGptSearch=useSelector(store=>store.gpt.showGptSearch);
 
     const handleSignout=()=>{
 
@@ -44,6 +47,11 @@ const Header=()=>{
         return () => unsubscirbe();
         
       },[])
+
+     const toggleGPTSearch =()=>{
+
+          dispatch(toggleGptSearchView(!showGptSearch));
+     }
   
 
     return (
@@ -51,16 +59,19 @@ const Header=()=>{
         <img className="w-44 mx-auto md:mx-0"
         src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
         alt="logo"/>
-        {user && <div className="flex p-4 m-2">
+        
+        {user && <div className="flex p-4 m-2 justify-between">
+            <button onClick={toggleGPTSearch}className="font-semibold px-2 bg-red-700 rounded-lg cursor-pointer">
+              {showGptSearch?"Home Page":"GPT Search"}</button>
             <div className="px-2">
                 <img className="w-10 "
                     alt="logo"
                     src="https://tse1.mm.bing.net/th?id=OIP.e1KNYwnuhNwNj7_-98yTRwHaF7&pid=Api&rs=1&c=1&qlt=95&w=143&h=114"/>
             </div>
 
-            <div className="px-2">             
-                <button onClick={handleSignout} className="font-semibold  bg-red-700 w-20 h-full rounded-sm cursor-pointer">Sign out</button>
-            </div> 
+                       
+            <button onClick={handleSignout} className="font-semibold  bg-red-700 px-2 rounded-lg cursor-pointer">Sign out</button>
+            
         </div>}
       </div>
 
